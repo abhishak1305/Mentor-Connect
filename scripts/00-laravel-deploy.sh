@@ -1,6 +1,9 @@
 #!/bin/sh
 set -e
 
+echo "Clearing stale sessions collection..."
+php artisan tinker --execute="DB::connection('mongodb')->getCollection('sessions')->drop();" 2>/dev/null || true
+
 echo "Caching config..."
 php artisan config:cache
 
