@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+set -e
+
+echo "Caching config..."
+php artisan config:cache
+
+echo "Caching routes..."
+php artisan route:cache
+
+echo "Caching views..."
+php artisan view:cache
+
+echo "Running migrations..."
+php artisan migrate --force
+
+echo "Starting Supervisor (NGINX + PHP-FPM)..."
+exec /usr/bin/supervisord -c /etc/supervisord.conf
